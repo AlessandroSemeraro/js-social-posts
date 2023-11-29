@@ -65,8 +65,6 @@ const wrapperContainer = document.getElementById('container');
 
 posts.forEach((post)=>{
     
-let counterLikes=0
-
     wrapperContainer.innerHTML +=`
         <div class="post">
             <div class="post__header">
@@ -87,13 +85,13 @@ let counterLikes=0
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
+                        Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
                     </div>
                 </div> 
             </div>            
@@ -103,8 +101,22 @@ let counterLikes=0
 //3)Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. 
 //Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 
-//FUNCTION//
-function addCounterLikes(){
-    counterLikes++
-    
+let likeButton=wrapperContainer.querySelectorAll('a.like-button.js-like-button');
+console.log(likeButton)
+let likeCounters=wrapperContainer.querySelectorAll('b.js-likes-counter');
+console.log(likeButton)
+
+for (let index = 0 ; index < likeButton.length; index++){
+    const currentLikeButton = likeButton[index];
+    currentLikeButton.addEventListener('click', function( event ){
+        event.preventDefault();
+
+        if (currentLikeButton.classList.contains('like-button--liked')){
+            currentLikeButton.classList.remove('like-button--liked');
+            likeCounters[index].innerHTML = parseInt(likeCounters[index].innerHTML, 10) - 1;
+        } else {
+            currentLikeButton.classList.add('like-button--liked');
+            likeCounters[index].innerHTML = parseInt(likeCounters[index].innerHTML, 10) + 1;
+        }
+    });
 }
