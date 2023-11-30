@@ -101,16 +101,23 @@ posts.forEach((post)=>{
 //3)Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. 
 //Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 
+//prendo lista dei bottoni e i counter
 let likeButton=wrapperContainer.querySelectorAll('a.like-button.js-like-button');
 console.log(likeButton)
-let likeCounters=wrapperContainer.querySelectorAll('b.js-likes-counter');
-console.log(likeButton)
 
+let likeCounters=wrapperContainer.querySelectorAll('b.js-likes-counter');
+console.log(likeCounters)
+
+
+//ciclo 
 for (let index = 0 ; index < likeButton.length; index++){
     const currentLikeButton = likeButton[index];
+
+    //add event on click
     currentLikeButton.addEventListener('click', function( event ){
         event.preventDefault();
 
+        //like button + counter
         if (currentLikeButton.classList.contains('like-button--liked')){
             currentLikeButton.classList.remove('like-button--liked');
             likeCounters[index].innerHTML = parseInt(likeCounters[index].innerHTML, 10) - 1;
